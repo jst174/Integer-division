@@ -1,6 +1,5 @@
 package ua.com.foxminded.integer_division;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class DivisionFormater {
 
     private void formatStepsToString(Division resultOfDivision) {
         List<Integer> divisionSteps = resultOfDivision.prepareListOfDivisionSteps();
-        steps = new ArrayList<>();
+        steps = new LinkedList<>();
         for (int step : divisionSteps) {
             steps.add(String.valueOf(step));
         }
