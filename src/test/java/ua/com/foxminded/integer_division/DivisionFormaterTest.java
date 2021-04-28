@@ -1,6 +1,7 @@
 package ua.com.foxminded.integer_division;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static java.lang.System.lineSeparator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,38 +9,47 @@ import org.junit.jupiter.api.Test;
 class DivisionFormaterTest {
     private Division division;
     private DivisionFormater formater;
+    private IntegersOfDivision integer;
+    private DivisionResult result;
 
     @BeforeEach
     void setUp() {
         formater = new DivisionFormater();
+        result = new DivisionResult();
+        division = new Division();
+        
     }
 
     @Test
     void resultOfInteger_DividentAndDividerIsPositive_quotientShouldBePositive() {
-        division = new Division(512, 8);
-        assertEquals("_512|8\n" + " 48 |---\n" + " -- |64\n" + " _32\n" + "  32\n" + "  --\n" + "   0",
-                formater.resultOfDivision(division));
+        integer = new IntegersOfDivision(512, 8);
+        assertEquals("_512|8" + lineSeparator() + " 48 |---" + lineSeparator() + " -- |64" + lineSeparator() + 
+                " _32" + lineSeparator() + "  32" + lineSeparator() + "  --" + lineSeparator() + "   0",
+                formater.resultOfDivision(result, integer, division));
     }
 
     @Test
     void resultOfInteger_DividentIsNegative_quotientShouldBeNegative() {
-        division = new Division(-512, 8);
-        assertEquals("_512|8\n" + " 48 |---\n" + " -- |-64\n" + " _32\n" + "  32\n" + "  --\n" + "   0",
-                formater.resultOfDivision(division));
+        integer = new IntegersOfDivision(-512, 8);
+        assertEquals("_512|8" + lineSeparator() + " 48 |---" + lineSeparator() + " -- |-64" + lineSeparator() + 
+                " _32" + lineSeparator() + "  32" + lineSeparator() + "  --" + lineSeparator() + "   0",
+                formater.resultOfDivision(result, integer, division));
     }
 
     @Test
     void resultOfInteger_DividerIsNegative_quotientShouldBeNegative() {
-        division = new Division(512, -8);
-        assertEquals("_512|8\n" + " 48 |---\n" + " -- |-64\n" + " _32\n" + "  32\n" + "  --\n" + "   0",
-                formater.resultOfDivision(division));
+        integer = new IntegersOfDivision(512, -8);
+        assertEquals("_512|8" + lineSeparator() + " 48 |---" + lineSeparator() + " -- |-64" + lineSeparator() + 
+                " _32" + lineSeparator() + "  32" + lineSeparator() + "  --" + lineSeparator() + "   0",
+                formater.resultOfDivision(result, integer, division));
     }
 
     @Test
     void resultOfInteger_DividerAndDividentIsNegative_quotientShouldBePositive() {
-        division = new Division(512, -8);
-        assertEquals("_512|8\n" + " 48 |---\n" + " -- |-64\n" + " _32\n" + "  32\n" + "  --\n" + "   0",
-                formater.resultOfDivision(division));
+        integer = new IntegersOfDivision(-512, -8);
+        assertEquals("_512|8" + lineSeparator() + " 48 |---" + lineSeparator() + " -- |64" + lineSeparator() + 
+                " _32" + lineSeparator() + "  32" + lineSeparator() + "  --" + lineSeparator() + "   0",
+                formater.resultOfDivision(result, integer, division));
     }
 
 }

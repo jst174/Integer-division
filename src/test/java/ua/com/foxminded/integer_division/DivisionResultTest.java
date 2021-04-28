@@ -8,13 +8,21 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class DivisionTest {
+class DivisionResultTest {
 
-    private Division divider;
+    private DivisionResult result;
+    private IntegersOfDivision integer;
+    private Division division;
+    
+    @BeforeEach
+    void setUp() {
+        result = new DivisionResult();
+        division = new Division();
+    }
 
     @Test
     void prepareListOfDivisionSteps_dividentAndDividerIsPositive_shouldAddToListAllSteps() {
-        divider = new Division(78945, 4);
+        integer = new IntegersOfDivision(78945, 4);
         List<Integer> excpected = new LinkedList<>();
         excpected.add(78945);
         excpected.add(4);
@@ -26,12 +34,12 @@ class DivisionTest {
         excpected.add(12);
         excpected.add(25);
         excpected.add(24);
-        assertEquals(excpected, divider.prepareListOfDivisionSteps());
+        assertEquals(excpected, result.resultOfDivision(division, integer));
     }
 
     @Test
     void prepareListOfDivisionSteps_dividentIsNegative_shouldAddToListAllSteps() {
-        divider = new Division(-78945, 4);
+        integer = new IntegersOfDivision(-78945, 4);
         List<Integer> excpected = new LinkedList<>();
         excpected.add(78945);
         excpected.add(4);
@@ -43,12 +51,12 @@ class DivisionTest {
         excpected.add(12);
         excpected.add(25);
         excpected.add(24);
-        assertEquals(excpected, divider.prepareListOfDivisionSteps());
+        assertEquals(excpected, result.resultOfDivision(division, integer));
     }
 
     @Test
     void prepareListOfDivisionSteps_dividerIsNegative_shouldAddToListAllSteps() {
-        divider = new Division(78945, -4);
+        integer = new IntegersOfDivision(78945, -4);
         List<Integer> excpected = new LinkedList<>();
         excpected.add(78945);
         excpected.add(4);
@@ -60,12 +68,12 @@ class DivisionTest {
         excpected.add(12);
         excpected.add(25);
         excpected.add(24);
-        assertEquals(excpected, divider.prepareListOfDivisionSteps());
+        assertEquals(excpected, result.resultOfDivision(division, integer));
     }
 
     @Test
     void prepareListOfDivisionSteps_dividerAndDivisionIsNegative_shouldAddToListAllSteps() {
-        divider = new Division(-78945, -4);
+        integer = new IntegersOfDivision(-78945, 4);
         List<Integer> excpected = new LinkedList<>();
         excpected.add(78945);
         excpected.add(4);
@@ -77,16 +85,12 @@ class DivisionTest {
         excpected.add(12);
         excpected.add(25);
         excpected.add(24);
-        assertEquals(excpected, divider.prepareListOfDivisionSteps());
+        assertEquals(excpected, result.resultOfDivision(division, integer));
     }
 
     @Test
     void dividerIsZero_ShouldThrowException() {
-        assertThrows(ArithmeticException.class, () -> new Division(512, 0));
+        assertThrows(ArithmeticException.class, () -> new IntegersOfDivision(512, 0));
     }
 
-    @Test
-    void dividerMoreThanDivident_ShouldThrowException() {
-        assertThrows(IllegalArgumentException.class, () -> new Division(512, 612));
-    }
 }
