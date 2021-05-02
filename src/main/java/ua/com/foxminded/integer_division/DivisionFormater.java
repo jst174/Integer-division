@@ -11,88 +11,82 @@ public class DivisionFormater {
     private static final String HYPHENS = "-";
     private static final String SLAH = "|";
 
-    public String resultOfDivision(DivisionResult resultOfDivision, IntegersOfDivision integer, Division division) {
-        prepareStepsForPrint(resultOfDivision, integer, division);
-        return String.valueOf(resultOfDivision.getString());
+    public String format(Result result) {
+        if (result == null) {
+            throw new IllegalArgumentException();
+        }
+        StringBuilder string = new StringBuilder();
+        List<String> steps = new LinkedList<>();
+        prepareStepsForPrint(result, string, steps);
+        return String.valueOf(string);
     }
 
-    private void prepareStepsForPrint(DivisionResult resultOfDivision, IntegersOfDivision integer, Division division) {
-
-        formatStepsToString(resultOfDivision, integer, division);
-        integer.setLengthDivident(resultOfDivision.getSteps().get(0).length());
-        integer.setLenghtSubstractedNumber(resultOfDivision.getSteps().get(1).length());
-        addFirstRow(resultOfDivision,integer);
-        addSecondRow(resultOfDivision,integer);
-        addThirdRow(resultOfDivision,integer);
-        addOtherRows(resultOfDivision);
-        addEndRow(resultOfDivision, integer, division);
-        String.valueOf(resultOfDivision.getString());
+    private void prepareStepsForPrint(Result result, StringBuilder string, List<String> steps) {
+        formatStepsToString(result, steps);
+        int lengthDivident = steps.get(0).length();
+        int lenghtSubstarctedNumber = steps.get(1).length();
+        addFirstRow(string, steps, result);
+        addSecondRow(string, steps, lengthDivident, lenghtSubstarctedNumber);
+        addThirdRow(string, result, lengthDivident, lenghtSubstarctedNumber);
+        addOtherRows(string, steps);
+        addEndRow(string, result, lengthDivident);
     }
 
-    private void formatStepsToString(DivisionResult resultOfDivision, IntegersOfDivision integer, Division division) {
-        for (int step : resultOfDivision.resultOfDivision(division, integer)) {
-            resultOfDivision.getSteps().add(String.valueOf(step));
+    private void formatStepsToString(Result result, List<String> steps) {
+        for (int step : result.getDivisionSteps()) {
+            steps.add(String.valueOf(step));
         }
     }
 
-    private void addFirstRow(DivisionResult result, IntegersOfDivision integer) {
-        result.getString().append(MINUS + result.getSteps().get(0) + SLAH + String.valueOf(integer.getDivider()) + lineSeparator());
+    private void addFirstRow(StringBuilder string, List<String> steps, Result result) {
+        string.append(MINUS + steps.get(0) + SLAH + String.valueOf(result.getDivider()) + lineSeparator());
     }
 
-    private void addSecondRow(DivisionResult result, IntegersOfDivision integer) {
-        result.getString().append(SPACE + result.getSteps().get(1)
-                + quantityOfSpaces(integer.getLengthDivident() - integer.getLenghtSubstractedNumber()) + SLAH
-                + quantityOfHyphens(integer.getLengthDivident()) + lineSeparator());
+    private void addSecondRow(StringBuilder string, List<String> steps, int lenghtDivident,
+            int lenghtSubstarctedNumber) {
+        string.append(SPACE + steps.get(1) + addSymbol(lenghtDivident - lenghtSubstarctedNumber, SPACE) + SLAH
+                + addSymbol(lenghtDivident, HYPHENS) + lineSeparator());
     }
 
-    private void addThirdRow(DivisionResult result, IntegersOfDivision integer) {
-        result.getString().append(SPACE + quantityOfHyphens(integer.getLenghtSubstractedNumber())
-                + quantityOfSpaces(integer.getLengthDivident() - integer.getLenghtSubstractedNumber()) + SLAH
-                + String.valueOf(integer.getQuotient()) + lineSeparator());
+    private void addThirdRow(StringBuilder string, Result result, int lenghtDivident, int lenghtSubstarctedNumber) {
+        string.append(SPACE + addSymbol(lenghtSubstarctedNumber, HYPHENS)
+                + addSymbol(lenghtDivident - lenghtSubstarctedNumber, SPACE) + SLAH
+                + String.valueOf((result.getQuotient()) + lineSeparator()));
     }
 
-    private void addOtherRows(DivisionResult result) {
-        String secondRow = SPACE + result.getSteps().get(1);
+    private void addOtherRows(StringBuilder string, List<String> steps) {
+        String secondRow = SPACE + steps.get(1);
         int lengthIndents = secondRow.length();
-        for (int i = 2; i < result.getSteps().size() - 1;) {
-            int lengthMinuend = result.getSteps().get(i).length();
-            int lengthSubtrahent = result.getSteps().get(i + 1).length();
-            String minuendRow = quantityOfSpaces(lengthIndents - lengthMinuend) + MINUS + result.getSteps().get(i)
+        for (int i = 2; i < steps.size() - 1;) {
+            int lengthMinuend = steps.get(i).length();
+            int lengthSubtrahent = steps.get(i + 1).length();
+            String minuendRow = addSymbol(lengthIndents - lengthMinuend, SPACE) + MINUS + steps.get(i)
                     + lineSeparator();
             lengthIndents = minuendRow.length() - 2;
-            String subtrahentRow = quantityOfSpaces(lengthIndents - lengthSubtrahent) + result.getSteps().get(i + 1)
+            String subtrahentRow = addSymbol(lengthIndents - lengthSubtrahent, SPACE) + steps.get(i + 1)
                     + lineSeparator();
             lengthIndents = subtrahentRow.length() - 2;
-            String dividingRow = quantityOfSpaces(lengthIndents - lengthSubtrahent)
-                    + quantityOfHyphens(lengthSubtrahent) + lineSeparator();
-            result.getString().append(minuendRow);
-            result.getString().append(subtrahentRow);
-            result.getString().append(dividingRow);
+            String dividingRow = addSymbol(lengthIndents - lengthSubtrahent, SPACE)
+                    + addSymbol(lengthSubtrahent, HYPHENS) + lineSeparator();
+            string.append(minuendRow);
+            string.append(subtrahentRow);
+            string.append(dividingRow);
             i += 2;
         }
     }
 
-    private void addEndRow(DivisionResult resultOfDivision, IntegersOfDivision integer, Division division) {
-        int remainder = division.calculateRemainder(integer);
-        int lengthRemainder = String.valueOf(remainder).length() - 1;
-        String endRow = quantityOfSpaces(integer.getLengthDivident() - lengthRemainder) + (remainder);
-        resultOfDivision.getString().append(endRow);
+    private void addEndRow(StringBuilder string, Result result, int lengthDivident) {
+        int lengthRemainder = String.valueOf(result.getRemainder()).length() - 1;
+        String endRow = addSymbol(lengthDivident - lengthRemainder, SPACE) + (result.getRemainder());
+        string.append(endRow);
     }
 
-    private String quantityOfSpaces(int length) {
-        String spaces = "";
+    private String addSymbol(int length, String symbol) {
+        String separator = "";
         for (int i = 0; i < length; i++) {
-            spaces = spaces.concat(SPACE);
+            separator = separator.concat(symbol);
         }
-        return spaces;
-    }
-
-    private String quantityOfHyphens(int length) {
-        String hyphens = "";
-        for (int i = 0; i < length; i++) {
-            hyphens = hyphens.concat(HYPHENS);
-        }
-        return hyphens;
+        return separator;
     }
 
 }

@@ -10,11 +10,10 @@ public class Main {
             int inputDivident = scanner.nextInt();
             System.out.println("Enter your divider, please");
             int inputDivider = scanner.nextInt();
-            IntegersOfDivision integers = new IntegersOfDivision(inputDivident, inputDivider);
             Division division = new Division();
-            DivisionResult result = new DivisionResult();
+            Result result = division.performDivision(inputDivident, inputDivider);
             DivisionFormater formater = new DivisionFormater();
-            System.out.println(formater.resultOfDivision(result, integers, division));
+            System.out.println(formater.format(result));
         } catch (Exception e) {
             e.printStackTrace();
         }

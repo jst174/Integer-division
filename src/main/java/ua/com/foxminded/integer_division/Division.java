@@ -5,34 +5,39 @@ import java.util.List;
 
 public class Division {
 
-    public void division(IntegersOfDivision integer) {
-        List<Integer> digitsOfDivident = splitNumber(integer.getDivident());
+    public Result performDivision(int divident, int divider) {
+        int partOfDivident = 0;
+        int quotient = divident / divider;
+        divident = Math.abs(divident);
+        divider = Math.abs(divider);
+        int remainder = calculateRemainder(divident, divider);
+        List<Integer> digitsOfDivident = splitNumber(divident);
         List<Integer> divisionSteps = new LinkedList<>();
         for (int endIndex = 0, beginIndex = 0; endIndex < digitsOfDivident.size();) {
             if (beginIndex == endIndex) {
-                integer.setPartOfDivident(digitsOfDivident.get(beginIndex));
+                partOfDivident = digitsOfDivident.get(beginIndex);
             } else {
-                integer.setPartOfDivident((integer.getPartOfDivident() * 10) + digitsOfDivident.get(endIndex));
+                partOfDivident = (partOfDivident * 10) + digitsOfDivident.get(endIndex);
             }
-            if (integer.getPartOfDivident() < integer.getDivider()) {
+            if (partOfDivident < divider) {
                 endIndex++;
             } else {
-                divisionSteps.add(integer.getPartOfDivident());
-                divisionSteps.add(integer.getPartOfDivident() - (calculateRemainder(integer)));
-                if (calculateRemainder(integer) > 0) {
-                    digitsOfDivident.set(endIndex, calculateRemainder(integer));
+                divisionSteps.add(partOfDivident);
+                divisionSteps.add(partOfDivident - (calculateRemainder(partOfDivident, divider)));
+                if (calculateRemainder(partOfDivident, divider) > 0) {
+                    digitsOfDivident.set(endIndex, calculateRemainder(partOfDivident, divider));
                 } else {
                     endIndex++;
                 }
                 beginIndex = endIndex;
             }
         }
-        divisionSteps.set(0, integer.getDivident());
-        integer.setDivisionSteps(divisionSteps);
+        divisionSteps.set(0, divident);
+        return new Result(divident, divider, quotient, remainder, divisionSteps);
     }
 
-    public int calculateRemainder(IntegersOfDivision integer) {
-        return integer.getPartOfDivident() % integer.getDivider();
+    public int calculateRemainder(int divident, int divider) {
+        return divident % divider;
     }
 
     private List<Integer> splitNumber(int number) {

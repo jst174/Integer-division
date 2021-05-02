@@ -50,7 +50,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>${maven-jar-plugin.version}</version>
                 <configuration>
-                    <finalName>Anagrams</finalName>
+                    <finalName>Division</finalName>
                 </configuration>
             </plugin>
             <plugin>
