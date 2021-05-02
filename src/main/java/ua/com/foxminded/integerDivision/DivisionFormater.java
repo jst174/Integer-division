@@ -1,4 +1,4 @@
-package ua.com.foxminded.integer_division;
+package ua.com.foxminded.integerDivision;
 
 import static java.lang.System.lineSeparator;
 import java.util.LinkedList;

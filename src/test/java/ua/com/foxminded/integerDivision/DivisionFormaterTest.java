@@ -6,9 +6,9 @@ import static java.lang.System.lineSeparator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ua.com.foxminded.integer_division.Division;
-import ua.com.foxminded.integer_division.DivisionFormater;
-import ua.com.foxminded.integer_division.Result;
+import ua.com.foxminded.integerDivision.Division;
+import ua.com.foxminded.integerDivision.DivisionFormater;
+import ua.com.foxminded.integerDivision.Result;
 
 class DivisionFormaterTest {
 
