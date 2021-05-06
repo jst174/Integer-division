@@ -1,18 +1,18 @@
-package ua.com.foxminded.integerDivision;
+package ua.com.foxminded.division;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Division {
 
-    public Result performDivision(int divident, int divider) {
+    public Result divide(int inputDivident, int inputDivider) {
         int partOfDivident = 0;
-        int quotient = divident / divider;
-        divident = Math.abs(divident);
-        divider = Math.abs(divider);
-        int remainder = calculateRemainder(divident, divider);
+        int quotient = 0;
+        int divident = Math.abs(inputDivident);
+        int divider = Math.abs(inputDivider);
+        int remainder = 0;
         List<Integer> digitsOfDivident = splitNumber(divident);
-        List<Integer> divisionSteps = new LinkedList<>();
+        List<DivisionStep> divisionSteps = new LinkedList<DivisionStep>();
         for (int endIndex = 0, beginIndex = 0; endIndex < digitsOfDivident.size();) {
             if (beginIndex == endIndex) {
                 partOfDivident = digitsOfDivident.get(beginIndex);
@@ -22,22 +22,24 @@ public class Division {
             if (partOfDivident < divider) {
                 endIndex++;
             } else {
-                divisionSteps.add(partOfDivident);
-                divisionSteps.add(partOfDivident - (calculateRemainder(partOfDivident, divider)));
-                if (calculateRemainder(partOfDivident, divider) > 0) {
-                    digitsOfDivident.set(endIndex, calculateRemainder(partOfDivident, divider));
+                remainder = partOfDivident % divider;
+                quotient = (quotient * 10) + (partOfDivident / divider);
+                divisionSteps.add(new DivisionStep(partOfDivident, partOfDivident - remainder));
+                if (remainder > 0) {
+                    digitsOfDivident.set(endIndex, remainder);
                 } else {
                     endIndex++;
                 }
                 beginIndex = endIndex;
             }
         }
-        divisionSteps.set(0, divident);
+        if ((inputDivident < 0) ^ (inputDivider < 0)) {
+            quotient *= -1;
+        }
+        DivisionStep firstStep = divisionSteps.get(0);
+        firstStep.setMinuend(divident);
+        divisionSteps.set(0, firstStep);
         return new Result(divident, divider, quotient, remainder, divisionSteps);
-    }
-
-    public int calculateRemainder(int divident, int divider) {
-        return divident % divider;
     }
 
     private List<Integer> splitNumber(int number) {

@@ -1,17 +1,18 @@
-package ua.com.foxminded.integerDivision;
+package ua.com.foxminded.division;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Result {
+
     private final int divident;
     private final int divider;
     private final int quotient;
     private final int remainder;
-    private final List<Integer> divisionSteps;
+    private final List<DivisionStep> divisionSteps;
 
     public Result(final int divident, final int divider, final int quotient, final int remainder,
-            final List<Integer> divisionSteps) {
+            final List<DivisionStep> divisionSteps) {
         this.divident = divident;
         this.divider = divider;
         this.quotient = quotient;
@@ -35,7 +36,7 @@ public class Result {
         return remainder;
     }
 
-    public List<Integer> getDivisionSteps() {
+    public List<DivisionStep> getDivisionSteps() {
         return divisionSteps;
     }
 
