@@ -36,7 +36,9 @@ class DivisionFormaterTest {
         expected.append("  32" + lineSeparator());
         expected.append("  --" + lineSeparator());
         expected.append("   0");
+        
         assertEquals(expected.toString(), formater.format(result));
+        
     }
 
     @Test
@@ -51,7 +53,9 @@ class DivisionFormaterTest {
         expected.append("  32" + lineSeparator());
         expected.append("  --" + lineSeparator());
         expected.append("   0");
+        
         assertEquals(expected.toString(), formater.format(result));
+        
     }
 
     @Test
@@ -66,7 +70,9 @@ class DivisionFormaterTest {
         expected.append("  32" + lineSeparator());
         expected.append("  --" + lineSeparator());
         expected.append("   0");
+        
         assertEquals(expected.toString(), formater.format(result));
+        
     }
 
     @Test
@@ -81,7 +87,9 @@ class DivisionFormaterTest {
         expected.append("  32" + lineSeparator());
         expected.append("  --" + lineSeparator());
         expected.append("   0");
+        
         assertEquals(expected.toString(), formater.format(result));
+        
     }
 
 }

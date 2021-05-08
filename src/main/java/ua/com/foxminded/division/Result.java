@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Result {
 
-    private final int divident;
+    private final int dividend;
     private final int divider;
     private final int quotient;
     private final int remainder;
@@ -13,15 +13,15 @@ public class Result {
 
     public Result(final int divident, final int divider, final int quotient, final int remainder,
             final List<DivisionStep> divisionSteps) {
-        this.divident = divident;
+        this.dividend = divident;
         this.divider = divider;
         this.quotient = quotient;
         this.remainder = remainder;
         this.divisionSteps = divisionSteps;
     }
 
-    public int getDivident() {
-        return divident;
+    public int getDividend() {
+        return dividend;
     }
 
     public int getDivider() {
@@ -44,7 +44,7 @@ public class Result {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + divident;
+        result = prime * result + dividend;
         result = prime * result + divider;
         result = prime * result + ((divisionSteps == null) ? 0 : divisionSteps.hashCode());
         result = prime * result + quotient;
@@ -61,7 +61,7 @@ public class Result {
         if (getClass() != obj.getClass())
             return false;
         Result other = (Result) obj;
-        if (divident != other.divident)
+        if (dividend != other.dividend)
             return false;
         if (divider != other.divider)
             return false;

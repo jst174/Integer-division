@@ -7,11 +7,11 @@ public class Main {
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("Enter your divident, please");
-            int inputDivident = scanner.nextInt();
+            int inputDividend = scanner.nextInt();
             System.out.println("Enter your divider, please");
             int inputDivider = scanner.nextInt();
             Division division = new Division();
-            Result result = division.divide(inputDivident, inputDivider);
+            Result result = division.divide(inputDividend, inputDivider);
             DivisionFormater formater = new DivisionFormater();
             System.out.println(formater.format(result));
         } catch (Exception e) {
