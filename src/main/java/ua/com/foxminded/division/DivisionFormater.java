@@ -63,8 +63,8 @@ public class DivisionFormater {
     }
 
     private void addFirstRow(StringBuilder divisionResult, List<DivisionStep> steps, Result result) {
-        divisionResult.append(MINUS + String.valueOf(result.getDividend()) + SLAH
-                + String.valueOf(result.getDivider()) + lineSeparator());
+        divisionResult.append(MINUS + String.valueOf(result.getDividend()) + SLAH + String.valueOf(result.getDivider())
+                + lineSeparator());
     }
 
     private void addSecondRow(StringBuilder divisionResult, List<DivisionStep> steps, int lenghtDividend,
@@ -84,7 +84,7 @@ public class DivisionFormater {
     private String addSymbol(int length, char symbol) {
         String separator = "";
         for (int i = 0; i < length; i++) {
-            separator = separator + symbol;
+            separator += symbol;
         }
         return separator;
     }
